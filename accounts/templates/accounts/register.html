@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Regsiter
+{% endblock title %}
+
+{% block content %}
+
+
+		<!-- BREADCRUMB -->
+		<div id="breadcrumb" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<h3 class="breadcrumb-header">Register</h3>
+						<ul class="breadcrumb-tree">
+							<li><a href="{% url 'home-page' %}">Home</a></li>
+							<li class="active">Register</li>
+						</ul>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /BREADCRUMB -->
+
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+
+					<div class="col-md-7">
+						<!-- Billing Details -->
+						<div class="billing-details">
+							<div class="section-title">
+								<h3 class="title">Register New User</h3>
+							</div>
+							<form method="post" action="{% url 'register-form' %}">
+							    {% csrf_token %}
+								<div class="form-group">
+									{{ register_form.email }}
+									{% for error in register_form.email.errors %}
+									    <p class="error error-form">{{error}}</p>
+									{% endfor %}
+								</div>
+								<div class="form-group">
+									{{register_form.password}}
+									{% for error in register_form.password.errors %}
+									    <p class="error error-form">{{error}}</p>
+									{% endfor %}
+								</div>
+								<div class="form-group">
+									{{register_form.confirm_password}}
+									{% for error in register_form.confirm_password.errors %}
+									    <p class="error error-form">{{error}}</p>
+									{% endfor %}
+								</div>
+								<button type="submit" class="btn custom-btn">submit</button>
+							</form>
+						</div>
+					</div>
+					
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+{% endblock content %}
