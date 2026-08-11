@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.urls import reverse
 from rest_framework_simplejwt.tokens import RefreshToken
+from basket import serializers
 from .forms import RegisterForm, LoginForm
 from .models import User
 from django.utils.crypto import get_random_string
@@ -11,8 +12,9 @@ from utiles.send_custom_mail import send_email
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegisterSerializer
+from .serializers import RegisterSerializer, ProfileSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 class RegisterAPI(APIView):
     permission_classes= [AllowAny,]
@@ -52,7 +54,7 @@ class Register(View):
 class ActivateAccountAPI(APIView):
     permission_classes= [AllowAny,]
 
-    def get(self,request,activation_code):
+    def get(self, request, activation_code):
         user = User.objects.filter(email_active_code__iexact = activation_code).first()
         if user:
             if not user.is_active:
@@ -131,7 +133,6 @@ class LoginAPI(APIView):
 
 
 class LogoutAPI(APIView):
-    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
@@ -149,3 +150,18 @@ class Logout(View):
 
 
 # Create your views here.
+class ProfileAPI(APIView):
+
+    def get(self, request):
+        serializer = ProfileSerializer(request.user)
+        return Response (serializer.data)
+    
+    def patch(self, request):
+        serializer = ProfileSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response (serializer.data)
+    
+        return Response(
+                serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST)

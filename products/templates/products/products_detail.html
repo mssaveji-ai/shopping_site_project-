@@ -77,7 +77,7 @@ Product Detail
 							</div>
 							<div>
 								<h3 class="product-price"> {{product.discount_price}} <del class="product-old-price"> {{product.main_price}} </del></h3>
-								<span class="product-available">{% if product.in_stock %} In Stock {% endif %}</span>
+								<span class="product-available">{% if product.stock %} In Stock {% endif %}</span>
 							</div>
 							<p>{{product.short_description}}</p>
 
@@ -95,7 +95,7 @@ Product Detail
 									</select>
 								</label>
 							</div>
-                            {% if product.in_stock %}
+                            {% if product.stock %}
 								<div class="add-to-cart">
 									<div class="qty-label">
 										Qty

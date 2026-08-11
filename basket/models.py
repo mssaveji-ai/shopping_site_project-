@@ -4,8 +4,8 @@ from products.models import Products
 
 class Order(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='orders')
-    is_paid = models.BooleanField()
-    payment_date = models.DateField(blank=True,null=True)
+    is_paid = models.BooleanField(default=False)
+    payment_date = models.DateTimeField(blank=True,null=True)
 
     def calculate_total_price(self):
         total_price = 0
@@ -16,7 +16,10 @@ class Order(models.Model):
                 price = item.product.discount_price or item.product.main_price
                 total_price += price * item.count
         return total_price
-        
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['user'], condition = models.Q(is_paid=False), name='unique_active_order_per_user')]
+
     def __str__(self):
         return f"{self.id}: Order of {self.user}"
 

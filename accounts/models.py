@@ -14,6 +14,7 @@ class User(AbstractUser):
 
     def __str__(self):
         if self.first_name and self.last_name:
-            return self.get_full_name
+            return self.get_full_name()
         return self.email
 # Create your models here.
+

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$10d2tu*nfvltxm*don3mu1^cdl34_!k)meot0!usxv*zzwsko'
+SECRET_KEY = 'django-insecure-^gx(&#g)dj14@mm2%!guly%hdjv85k9vf6_&@04gr6jfs_@&t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -137,11 +138,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_HOST_USER = 'ms.saveji@gmail.com'
 # Application definition
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'ms.saveji@gmail.com'
-EMAIL_HOST_PASSWORD = 'cudn hnjr efus apvw'
+EMAIL_HOST_PASSWORD = 'idzn maqo gneo qdhm'
 EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -150,4 +152,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME':timedelta(hours=24),
+    'REFRESH_TOKEN_LIFETIME':timedelta(days=7),
 }

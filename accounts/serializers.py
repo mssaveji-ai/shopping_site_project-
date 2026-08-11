@@ -9,11 +9,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ['email', 'password','confirm_password']
         extra_kwargs = {'password':{'write_only': True}}
-
-    def email_validation(self, value):
-        if User.objects.filter(email__iexact=value).exists():
-            raise serializers.ValidationError("This email is already registered")
-        return value
     
     def validate(self, data):
         if data['password'] != data['confirm_password']:
@@ -31,4 +26,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         new_user.save()
         send_email('account_activation',new_user.email,{'user':new_user},'email/activate_account.html')
         return new_user
+    
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model= User
+        fields = ['email','first_name','last_name','image','about_user', 'address']
+        read_only_fields = ['email']
+        
         

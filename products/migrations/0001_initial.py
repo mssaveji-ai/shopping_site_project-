@@ -49,7 +49,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('slug', models.SlugField(blank=True, max_length=200, null=True, unique=True)),
-                ('in_stock', models.BooleanField(default=True)),
+                ('stock', models.BooleanField(default=True)),
                 ('is_delete', models.BooleanField()),
                 ('brand', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='products.productbrands')),
                 ('category', models.ManyToManyField(related_name='product_categories', to='products.productcategory')),
