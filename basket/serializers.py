@@ -19,10 +19,20 @@ class OrderDetailSerializer(serializers.ModelSerializer):
         else:
             data['product'] = None
         
+        if not instance.order.is_paid:
+            data['final_price'] = None
+        
         return data
     
     def get_item_total(self, obj): 
-        return obj.final_price * obj.count
+        if obj.order.is_paid and obj.final_price is not None:
+            return obj.final_price * obj.count
+        
+        if obj.product:
+            current_price = obj.product.discount_price or obj.product.main_price
+            return current_price * obj.count
+        
+        return 0
 
 class OrderSerializer(serializers.ModelSerializer):
     order_details = OrderDetailSerializer(many=True, read_only=True)

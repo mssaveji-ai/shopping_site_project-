@@ -127,8 +127,9 @@ class LoginAPI(APIView):
         if not user.check_password(password):
             return Response({'message':'Email or password is incorrect.'}, status=status.HTTP_400_BAD_REQUEST)
           
-        login(request, user)
-        return Response({'message':'Logged in successfully'}, status=status.HTTP_200_OK)
+        refresh = RefreshToken.for_user(user)
+        return Response({'message':'Logged in successfully', "refresh": str(refresh), "access": str(refresh.access_token)}
+                        , status=status.HTTP_200_OK)
     
 
 

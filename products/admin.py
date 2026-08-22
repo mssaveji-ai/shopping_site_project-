@@ -1,7 +1,10 @@
 from django.contrib import admin
 from . import models
 
-admin.site.register(models.Products)
+@admin.register(models.Products)
+class ProductAdmin(admin.ModelAdmin):
+    filter_horizontal = ['category', 'likes']
+
 admin.site.register(models.ProductBrands)
 admin.site.register(models.ProductCategory)
 admin.site.register(models.ProductGallery)

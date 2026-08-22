@@ -173,7 +173,7 @@ class ReviewAPI(APIView):
         serializer = ProductReviewSerializer(data= request.data)
 
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            serializer.save(user=request.user, product=product)
 
             return Response({
                 'status':'Review created successfully'
@@ -185,6 +185,7 @@ class ReviewAPI(APIView):
 
 
 class ProductReviewListAPI(APIView):
+    permission_classes = [AllowAny]
 
     def get(self, request, product_id):
         product = get_object_or_404(Products, id=product_id, is_delete=False)
